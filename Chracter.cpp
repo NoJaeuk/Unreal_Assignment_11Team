@@ -3,7 +3,7 @@
 using namespace std;
 
 Character::Character(const string& inputName) : level(1), maxHealth(200), health(maxHealth), attack(30), experience(0), gold(0) {}
-// 캐릭터 생성자 효율성을 위해 초기화 리스트로 변경하고 인자는 상수타입과 참조로 받는거로 변경
+// 캐릭터 생성자 효율성을 위해 초기화 리스트로 변경하고 string 객체는 상수타입과 참조로 받는거로 변경
 
 Character* Character::getInstance(string inputName) {
 	if (instance == nullptr) {
@@ -40,14 +40,20 @@ void Character::useItem(int index) {
 
 void Character::visitShop() {
 	/* 보류
+	// 임시 Shop 클래스명 변경시 수정 필요
 	Shop shop;
 	shop.shopOpen();
 	*/
 } // 상점 방문
 
-void Character::addItem(shared_ptr<Item> inputItem) {
+void Character::addItem(shared_ptr<Item> inputItem) { // 임시 Item 클래스명 변경시 수정 필요
 	inventory.push_back(inputItem);
 } // 아이템 추가
+
+bool Character::isDead() const
+{
+	return health <= 0;
+} // 캐릭터 생사여부 판단 함수 필요시 부활조건 등을 추가해서 확장 가능
 
 //getter
 const string& Character::getName() {

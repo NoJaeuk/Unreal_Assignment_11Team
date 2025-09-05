@@ -2,8 +2,8 @@
 #include <iostream>
 #include <string>
 #include <vector>
-#include "Item.h"
-#include "shop.h"
+#include "Item.h" //임시
+#include "shop.h" //임시
 
 using namespace std;
 
@@ -17,8 +17,8 @@ private:
 	int attack;
 	int experience;
 	int gold;
-	vector<shared_ptr<Item>> inventory;
-	Character(const string& inputName);
+	vector<shared_ptr<Item>> inventory; // 임시 Item 클래스명 변경시 수정 필요
+	Character(const string& inputName); // 생성자
 	//복사 방지
 	Character(const Character&) = delete;
 	Character& operator = (const Character&) = delete;
@@ -26,11 +26,12 @@ private:
 	Character& operator = (Character&&) = delete;
 public:
 	static Character* getInstance(string inputName = ""); // name 변수명 중복으로 생길 휴먼에러 방지차 inputName 으로 바꿈
-	void displayStatus();
-	void levelUp();
-	void useItem(int index);
-	void visitShop();
-	void addItem(shared_ptr<Item> inputItem);
+	void displayStatus(); // 캐릭터 상태창 확인 함수
+	void levelUp(); // 캐릭터 레벨업 구현 함수
+	void useItem(int index); // 아이템 사용 함수 미구현(조율 필요)
+	void visitShop(); // 상점 방문 함수 미구현(조율 필요)
+	void addItem(shared_ptr<Item> inputItem); // 아이템 추가 함수
+	bool isDead() const; // 캐릭터 생사여부 판단 함수
 	//getter
 	const string& getName(); // 효율성을 위해 상수와 참조값을 반환하게 변경
 	//int getMaxHealth(); // 필요시 추가
