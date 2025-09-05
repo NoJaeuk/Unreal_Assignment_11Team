@@ -32,7 +32,7 @@ public:
 	void visitShop();
 	void addItem(shared_ptr<Item> inputItem);
 	//getter
-	//string getName(); // 필요시 추가
+	string getName();
 	//int getMaxHealth(); // 필요시 추가
 	int getLevel();
 	int getHealth();
