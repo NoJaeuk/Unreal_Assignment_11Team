@@ -12,13 +12,13 @@ private:
 	static Character* instance; // 싱글톤 생성
 	string name;
 	int level;
-	int health;
 	int maxHealth;
+	int health;
 	int attack;
 	int experience;
 	int gold;
 	vector<shared_ptr<Item>> inventory;
-	Character(string inputName);
+	Character(const string& inputName);
 	//복사 방지
 	Character(const Character&) = delete;
 	Character& operator = (const Character&) = delete;
@@ -32,19 +32,19 @@ public:
 	void visitShop();
 	void addItem(shared_ptr<Item> inputItem);
 	//getter
-	string getName();
+	const string& getName(); // 효율성을 위해 상수와 참조값을 반환하게 변경
 	//int getMaxHealth(); // 필요시 추가
-	int getLevel();
-	int getHealth();
-	int getAttack();
-	int getExperience();
-	int getGold();
+	int getLevel() const; // 안정성을 위해 읽기 전용으로 변경
+	int getHealth() const;
+	int getAttack() const;
+	int getExperience() const;
+	int getGold() const;
 	//setter
 	//void setName(string val); // 필요시 추가
 	//void setMaxHealth(int val); // 필요시 추가
 	//void setLevel(int val); // 필요시 추가
-	void setHealth(int inputHealth);
-	void setAttack(int inputAttack);
-	void setExperience(int inputExperience);
-	void setGold(int inputGold);
+	void setHealth(const int& inputHealth); // 효율성을 위해 상수와 참조로 인자 받게 변경
+	void setAttack(const int& inputAttack);
+	void setExperience(const int& inputExperience);
+	void setGold(const int& inputGold);
 };

@@ -2,15 +2,8 @@
 
 using namespace std;
 
-Character::Character(string inputName) {
-	name = inputName;
-	level = 1;
-	maxHealth = 200;
-	health = maxHealth;
-	attack = 30;
-	experience = 0;
-	gold = 0;
-} // 캐릭터 생성자
+Character::Character(const string& inputName) : level(1), maxHealth(200), health(maxHealth), attack(30), experience(0), gold(0) {}
+// 캐릭터 생성자 효율성을 위해 초기화 리스트로 변경하고 인자는 상수타입과 참조로 받는거로 변경
 
 Character* Character::getInstance(string inputName) {
 	if (instance == nullptr) {
@@ -46,8 +39,10 @@ void Character::useItem(int index) {
 } // 아이템 사용
 
 void Character::visitShop() {
+	/* 보류
 	Shop shop;
 	shop.shopOpen();
+	*/
 } // 상점 방문
 
 void Character::addItem(shared_ptr<Item> inputItem) {
@@ -55,44 +50,43 @@ void Character::addItem(shared_ptr<Item> inputItem) {
 } // 아이템 추가
 
 //getter
-string Character::getName()
-{
+const string& Character::getName() {
 	return name;
 }
 
-int Character::getLevel() {
+int Character::getLevel() const {
 	return level;
 }
 
-int Character::getHealth() {
+int Character::getHealth() const {
 	return health;
 }
 
-int Character::getAttack() {
+int Character::getAttack() const {
 	return attack;
 }
 
-int Character::getExperience() {
+int Character::getExperience() const {
 	return experience;
 }
 
-int Character::getGold() {
+int Character::getGold() const {
 	return gold;
 }
 
 //setter
-void Character::setHealth(int inputHealth) {
-	health += inputHealth;
+void Character::setHealth(const int& inputHealth) {
+	health = inputHealth;
 }
 
-void Character::setAttack(int inputAttack) {
-	attack += inputAttack;
+void Character::setAttack(const int& inputAttack) {
+	attack = inputAttack;
 }
 
-void Character::setExperience(int inputExperience) {
-	experience += inputExperience;
+void Character::setExperience(const int& inputExperience) {
+	experience = inputExperience;
 }
 
-void Character::setGold(int inputGold) {
-	gold += inputGold;
+void Character::setGold(const int& inputGold) {
+	gold = inputGold;
 }
