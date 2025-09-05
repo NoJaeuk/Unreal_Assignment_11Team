@@ -43,8 +43,8 @@ public:
 	//void setName(string val); // 필요시 추가
 	//void setMaxHealth(int val); // 필요시 추가
 	//void setLevel(int val); // 필요시 추가
-	void setHealth(const int& inputHealth); // 효율성을 위해 상수와 참조로 인자 받게 변경
-	void setAttack(const int& inputAttack);
-	void setExperience(const int& inputExperience);
-	void setGold(const int& inputGold);
+	void setHealth(int inputHealth);
+	void setAttack(int inputAttack);
+	void setExperience(int inputExperience);
+	void setGold(int inputGold);
 };

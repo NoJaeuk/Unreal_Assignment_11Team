@@ -75,18 +75,18 @@ int Character::getGold() const {
 }
 
 //setter
-void Character::setHealth(const int& inputHealth) {
+void Character::setHealth(int inputHealth) {
 	health = inputHealth;
 }
 
-void Character::setAttack(const int& inputAttack) {
+void Character::setAttack(int inputAttack) {
 	attack = inputAttack;
 }
 
-void Character::setExperience(const int& inputExperience) {
+void Character::setExperience(int inputExperience) {
 	experience = inputExperience;
 }
 
-void Character::setGold(const int& inputGold) {
+void Character::setGold(int inputGold) {
 	gold = inputGold;
 }
