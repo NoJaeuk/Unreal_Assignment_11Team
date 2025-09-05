@@ -3,6 +3,7 @@
 #include <string>
 #include <vector>
 #include "Item.h"
+#include "shop.h"
 
 using namespace std;
 
@@ -16,7 +17,7 @@ private:
 	int attack;
 	int experience;
 	int gold;
-	vector<Item*> inventory;
+	vector<shared_ptr<Item>> inventory;
 	Character(string inputName);
 	//복사 방지
 	Character(const Character&) = delete;
@@ -29,4 +30,21 @@ public:
 	void levelUp();
 	void useItem(int index);
 	void visitShop();
+	void addItem(shared_ptr<Item> inputItem);
+	//getter
+	//string getName(); // 필요시 추가
+	//int getMaxHealth(); // 필요시 추가
+	int getLevel();
+	int getHealth();
+	int getAttack();
+	int getExperience();
+	int getGold();
+	//setter
+	//void setName(string val); // 필요시 추가
+	//void setMaxHealth(int val); // 필요시 추가
+	//void setLevel(int val); // 필요시 추가
+	void setHealth(int inputHealth);
+	void setAttack(int inputAttack);
+	void setExperience(int inputExperience);
+	void setGold(int inputGold);
 };

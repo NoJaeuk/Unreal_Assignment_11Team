@@ -30,21 +30,62 @@ void Character::displayStatus() {
 }
 
 void Character::levelUp() {
-	if (experience >= 100) {
-		experience -= 100;
-		if (level >= 10) {
-			level = 10;
-			return;
-		}
-		level++;
-		maxHealth = (maxHealth + (level * 20));
-		attack = (attack + (level * 5));
-		health = maxHealth;
-	}
+	experience -= 100;
+	if (level >= 10) {
+		level = 10;
+		return;
+	} // 예외 처리
+	level++;
+	maxHealth = (maxHealth + (level * 20));
+	attack = (attack + (level * 5));
+	health = maxHealth;
 }
 
 void Character::useItem(int index) {
+	//미구현
 }
 
 void Character::visitShop() {
+	Shop shop;
+	shop.shopOpen();
+}
+
+void Character::addItem(shared_ptr<Item> inputItem) {
+	inventory.push_back(inputItem);
+}
+
+int Character::getLevel() {
+	return level;
+}
+
+int Character::getHealth() {
+	return health;
+}
+
+int Character::getAttack() {
+	return attack;
+}
+
+int Character::getExperience() {
+	return experience;
+}
+
+int Character::getGold() {
+	return gold;
+}
+
+void Character::setHealth(int inputHealth) {
+	health += inputHealth;
+}
+
+void Character::setAttack(int inputAttack) {
+	attack += inputAttack;
+}
+
+void Character::setExperience(int inputExperience) {
+	experience += inputExperience;
+}
+
+void Character::setGold(int inputGold) {
+	gold += inputGold;
 }
