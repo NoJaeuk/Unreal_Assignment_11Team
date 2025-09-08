@@ -136,7 +136,6 @@
     <ClCompile Include="BattleManager.cpp" />
     <ClCompile Include="BossMonster.cpp" />
     <ClCompile Include="Goblin.cpp" />
-    <ClCompile Include="Monster.cpp" />
     <ClCompile Include="MonsterFactory.cpp" />
     <ClCompile Include="Orc.cpp" />
     <ClCompile Include="Slime.cpp" />

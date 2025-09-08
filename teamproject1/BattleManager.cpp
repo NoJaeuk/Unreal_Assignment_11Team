@@ -8,8 +8,7 @@
 // 전투 시작 함수: 캐릭터와 몬스터 간의 전투를 진행하고 결과를 처리함
 void BattleManager::startBattle(Character& character, Monster& monster) {
     // 몬스터 등장 메시지 출력
-    std::cout << "몬스터 " << monster.getName() << " 등장! 체력: "
-        << monster.getHealth() << ", 공격력: " << monster.getAttack() << "\n";
+	monster.printIntro();
 
     // 전투 루프: 둘 중 하나가 죽을 때까지 반복
     while (!monster.isDead() && !character.isDead()) {

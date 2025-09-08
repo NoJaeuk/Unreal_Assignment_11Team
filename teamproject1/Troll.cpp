@@ -1,30 +1,55 @@
 #include "Troll.h"
-#include <iostream>
-#include "Character.h"
-#include "Monster.h"
 #include "ItemFactory.h"
-
+#include <iostream>
+#include <cstdlib>
 
 Troll::Troll(int level)
-    : Monster("Troll", 0, 0) {
-    health = generateStat(level, 20, 30);  // 체력: 레벨 × 20 ~ 30
-    attack = generateStat(level, 5, 10);   // 공격력: 레벨 × 5 ~ 10
+    : name("Goblin"), health(generateStat(level, 20, 30)), attack(generateStat(level, 5, 10)) {
 }
 
-
-void Troll::interactWithCharacter(Character& character) {
-    printIntro();
+int Troll::generateStat(int level, int minMultiplier, int maxMultiplier) {
+    int min = level * minMultiplier;
+    int max = level * maxMultiplier;
+    return rand() % (max - min + 1) + min;
 }
 
 
 Item* Troll::dropItem() const {
     if (rand() % 100 < 30) {
-        return ItemFactory::createPotion(); // 드랍 성공 시 포션 생성
+        return ItemFactory::createPotion();
     }
-    return nullptr; // 드랍 실패
+    return nullptr;
+}
+
+int Troll::getGoldReward() const {
+    return 20;
 }
 
 int Troll::getExpReward() const {
-    return 50; 
+    return 50;
 }
 
+void Troll::printIntro() const {
+    std::cout << name << "이 등장했습니다! 체력: " << health << ", 공격력: " << attack << "\n";
+}
+
+bool Troll::isDead() const {
+    return health <= 0;
+}
+
+void Troll::takeDamage(int dmg) {
+    health -= dmg;
+    if (health < 0) health = 0;
+}
+
+std::string Troll::getName() const {
+    return name;
+}
+
+int Troll::getHealth() const {
+    return health;
+}
+
+int Troll::getAttack() const {
+    return attack;
+}
