@@ -1,6 +1,5 @@
 #include "Character.h"
 #include <iostream>
-//#include <algorithm>
 
 using namespace std;
 
@@ -38,12 +37,6 @@ void Character::levelUp() {
 	attack = (attack + (level * 5));
 	health = maxHealth;
 } // 레벨업 함수
-
-void Character::visitShop() {
-	// 임시 Shop 클래스명 변경시 수정 필요
-	//Shop shop;
-	//shop.shopOpen();
-} // 상점 방문
 
 void Character::addItem(shared_ptr<Item> inputItem) { // 임시 Item 클래스명 변경시 수정 필요
 	if (inventory.empty()) {
