@@ -1,0 +1,9 @@
+기존의 멤버 변수
+vector<shared_ptr<Item>> inventory 를
+struct itemCount
+vector<itemCount> inventory; 로 나누어 관리하게 수정
+
+itemCount의 생성자 추가
+addItem, removeItem 구현
+
+
