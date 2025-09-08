@@ -1,13 +1,13 @@
 #include "Character.h"
 #include <iostream>
-#include <algorithm>
+//#include <algorithm>
 
 using namespace std;
 
 Character::Character(const string& inputName) : name(inputName), level(1), maxHealth(200), health(maxHealth), attack(30), experience(0), gold(0) {}
 // 캐릭터 생성자 효율성을 위해 초기화 리스트로 변경하고 string 객체는 상수타입과 참조로 받는거로 변경
 
-Character::itemCount::itemCount(shared_ptr<Item> inputItem, int inputCount) : item(inputItem), count(inputCount) {}
+Character::itemCount::itemCount(shared_ptr<Item> inputItem, int inputCount, int inputPrice) : item(inputItem), count(inputCount), price(inputPrice) {}
 // 아이템 초기화 리스트
 
 Character* Character::getInstance(string inputName) {
@@ -47,19 +47,21 @@ void Character::visitShop() {
 
 void Character::addItem(shared_ptr<Item> inputItem) { // 임시 Item 클래스명 변경시 수정 필요
 	if (inventory.empty()) {
-		inventory.emplace_back(inputItem, 1);
-		cout << "아이템 추가 -> " << inputItem->getName() << " 1개" << endl;
+		inventory.emplace_back(inputItem, 1); // emplace_back 으로 객체 생성하여 삽입
+		cout << "[" << inputItem->getName() << "] 가 새롭게 추가되었습니다." << endl;
+		cout << "[" << inputItem->getName() << "] 의 현재 개수: 1개" << endl;
 		return;
 	} // 처음 아이템 추가시 비어있으면 중복 체크없이 바로 추가
 	for (auto& invItem : inventory) {
 		if (invItem.item->getName() == inputItem->getName()) {
 			invItem.count++;
-			cout << "아이템 추가 -> " << invItem.item->getName() << " 현재 개수: " << invItem.count << "개" << endl;
+			cout << "아이템 추가 -> [" << invItem.item->getName() << "] 현재 개수: " << invItem.count << "개" << endl;
 			return;
 		}
 	} // 중복 아이템 체크후 있을 경우 count 증가
 	inventory.emplace_back(inputItem, 1);
-	cout << "아이템 추가 -> " << inputItem->getName() << " 1개" << endl;
+	cout << "[" << inputItem->getName() << "] 가 새롭게 추가되었습니다." << endl;
+	cout << "[" << inputItem->getName() << "] 의 현재 개수: 1개" << endl;
 	// 중복되는 아이템 없을 경우 추가
 } // 아이템 추가
 
@@ -71,9 +73,9 @@ void Character::removeItem(shared_ptr<Item> inputItem) {
 	for (auto it = inventory.begin(); it != inventory.end(); it++) {
 		if (it->item->getName() == inputItem->getName()) {
 			it->count--;
-			cout << "아이템 감소 -> " << it->item->getName() << " 현재 개수: " << it->count << "개" << endl;
+			cout << "아이템 감소 -> [" << it->item->getName() << "] 현재 개수: " << it->count << "개" << endl;
 			if (it->count <= 0) {
-				cout << "(" << it->item->getName() << ") 해당 아이템을 전부 사용하였습니다." << endl;
+				cout << "[" << it->item->getName() << "] 해당 아이템을 전부 사용하였습니다." << endl;
 				inventory.erase(it);
 			}
 			return;
