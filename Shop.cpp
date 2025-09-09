@@ -2,12 +2,7 @@
 #include <string>
 #include <vector>
 #include "Shop.h"
-#include "Items.h"
 
-Shop::Shop()
-{
-    // 그냥 초기화만
-}
 
 void Shop::addItem(std::shared_ptr<Item> item, int count) //게임메니저에서 샵으로 가판대 아이템 리스트 보냄
 {
@@ -33,16 +28,56 @@ void Shop::displayItems() //가판대 보여주기
 }
 
 
-void Shop::sellItem(const std::string& name, Character& character) // 유저가 상점에게 아이템 구매
+void Shop::buyItem(const std::string& name, Character* character) //유저가 상점에게 아이템 판매
 {
-    Item* item = vector<Item> item_;
+    ShopItem* find = nullptr; //아이템 검색
+    for (auto& it : availableItems_)
+    {
+        if (it.item_->getName() == name)
+        {
+            find = &it;
+            break;
+        }
+    }
+
+    if (find == nullptr) //아이템 없음
+    {
+        std::cout << "상점에 해당 아이템이 없습니다." << std::endl;
+        return;
+    }
+
+    if (find->count_ <= 0) //재고없음
+    {
+        std::cout << "재고가 부족합니다." << std::endl;
+        return;
+    }
+
+    int price = find->item_->getPrice(); //돈부족
+    if (character->getGold() < price)
+    {
+        std::cout << "골드가 부족합니다." << std::endl;
+        return;
+    }
+
+    character->setGold(character->getGold() - price); //캐릭터돈깎기
+
+    character->addInventory(find->item_, 1); //아이템인벤토리추가
+
+    find->count_--; //상점 재고깎기
+
+    std::cout << "구매 완료: " << name << " ( " << price << " Gold )" << std::endl;
+
+    //상점 아이템에서 이름으로 찾기, 아이템의 골드를 가져와서 캐릭터에게 set골드 캐릭터의 골드가 아이템보다 낮으면 못팜.
+    // addInventory(shared_ptr<Item> name ,int count)로 아이템 추가
+    // 상점 재고에서 -1 
+    //재고 없을 시 아이템을 구매할수없습니다 if(count <=0)
 
 }
 
 
-void Shop::buyItem(const std::string& name, Character& character) //유저가 상점에게 아이템 판매
+void Shop::sellItem(const std::string& name, Character* character) // 유저가 상점에게 아이템 구매
 {
-    Item* item = character.findItem(name);
+    Item* item = character->findItem(name);
     if (item == nullptr)
     {
         std::cout << "해당 아이템이 없습니다." << std::endl;
@@ -52,18 +87,64 @@ void Shop::buyItem(const std::string& name, Character& character) //유저가 상점�
     std::cout << "판매 감사합니다." << std::endl;
 
     int price = item->getPrice(); // 캐릭터에게 아이템 값 불러옴
-    int change = static_cast<int>(price * 0.6); //거스름돈
-    character.setGold(character.getGold() + change); //아이템 값 60%반환
-    character.removeItem(item); //인벤토리에 아이템 삭제 요청
+    int change = static_cast<int>(price * 0.6); //아이템 값 계산
+    character->setGold(character->getGold() + change); //아이템 값 60%반환
+    character->removeItem(item); //인벤토리에 아이템 삭제 요청
 
     std::cout << change << "Gold를 드립니다." << std::endl;
 }
 
 
 
-void Shop::randomPick()
+void Shop::randomPick(Character* character)
 {
     std::cout << "랜덤 뽑기 시작." << std::endl;
+    std::srand(static_cast<unsigned int>(std::time(nullptr))); //시드초기화
+
+    int cost = 5; //뽑기가격
+
+    if (character->getGold() < cost) //돈부족
+    {
+        std::cout << "골드가 부족합니다. (필요: " << cost << " Gold)" << std::endl;
+        return;
+    }
+
+    character->setGold(character->getGold() - cost); //뽑기시작, 캐릭터 돈깎기
+    std::cout << "랜덤 뽑기 시작!" << std::endl;
+
+    int roll = std::rand() % 100 + 1; //난수고르기 1~100
+    std::cout << "당신이 뽑은 숫자는?: " << roll << std::endl;
+
+
+
+    if (roll <= 35) // 꽝1
+    {
+        std::cout << "꽝! 아무 것도 얻지 못했습니다." << std::endl;
+    }
+    else if (roll <= 60) // 꽝2
+    {
+        int reward = 3; //꽝2 상품
+        character->setGold(character->getGold() + reward);
+        std::cout << reward << " Gold를 획득했습니다!" << std::endl;
+    }
+    else if (roll <= 85)
+    {
+        if (roll % 2)
+        {
+            auto potion = std::make_shared<Item>("Health Potion");
+            character->addInventory(potion,1);
+            std::cout << "체력 포션을 획득했습니다!" << std::endl;
+        }
+        else
+        {
+            auto potion = std::make_shared<Item>("AttackPotion");
+            character->addInventory(potion, 1);
+            std::cout << "힘 포션을 획득했습니다!" << std::endl;
+        }
+    }
+
+    //gold 차감 5원
+    //int random = TriggerEventWithProbability(35, 60, 85); 꽝 / 3원 / 포션
 }
 
 

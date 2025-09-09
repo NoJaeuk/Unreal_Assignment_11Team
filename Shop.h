@@ -4,7 +4,7 @@
 #include <vector>
 #include "Shop.h"
 #include "Item.h"
-#include "Inventory.h"
+#include "Character.h"
 
 class Shop
 {
@@ -23,14 +23,14 @@ public:
     Shop(){}
     ~Shop(){}
 
-    void addItem(std::shared_ptr<Item> item, int count){};
+    void addItem(std::shared_ptr<Item> item, int count);
    
-    void displayItems() {};
+    void displayItems();
 
-    void buyItem(const std::string& name, Character& character) {};
+    void buyItem(const std::string& name, Character* character);
 
-    void sellItem(const std::string& name, Character& character) {};
+    void sellItem(const std::string& name, Character* character);
 
-    void randomPick() {};
+    void randomPick(Character* character);
 
 };
