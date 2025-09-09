@@ -131,7 +131,7 @@ int Character::getAttack() const {
 	return attack;
 }
 
-int Character::getExperience() const {
+int Character::getExp() const {
 	return exp;
 }
 

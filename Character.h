@@ -45,7 +45,7 @@ public:
 	int getLevel() const;
 	int getHealth() const;
 	int getAttack() const;
-	int getExperience() const;
+	int getExp() const;
 	int getGold() const;
 
 	// setter
