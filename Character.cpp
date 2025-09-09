@@ -4,10 +4,11 @@
 using namespace std;
 
 Character::Character(const string& inputName) : name(inputName), level(1), maxHealth(200), health(maxHealth), attack(30), exp(0), gold(0) {}
+// 캐릭터 초기화 리스트
+
 Character::~Character() {
 	//cout << "Character 객체 소멸자 호출" << endl; // 디버깅용 메세지
 }
-// 캐릭터 생성자 효율성을 위해 초기화 리스트로 변경하고 string 객체는 상수타입과 참조로 받는거로 변경
 
 Character::itemCount::itemCount(shared_ptr<Item> inputItem, int inputCount) : item(inputItem), count(inputCount) {}
 // 아이템 초기화 리스트
@@ -15,7 +16,7 @@ Character::itemCount::itemCount(shared_ptr<Item> inputItem, int inputCount) : it
 Character& Character::getInstance(string inputName) {
 	static Character instance(inputName);
 	return instance;
-} // 싱글톤 구현
+} // 참조 기반 싱글톤
 
 void Character::displayStatus() {
 	cout << "=====Status=====" << endl;
@@ -39,11 +40,11 @@ void Character::levelUp() {
 	maxHealth = (maxHealth + (level * 20));
 	attack = (attack + (level * 5));
 	health = maxHealth;
-} // 레벨업 함수
+} // 레벨업
 
 void Character::addItem(shared_ptr<Item> inputItem, int inputCount) { // 임시 Item 클래스명 변경시 수정 필요
 	if (inventory.empty()) {
-		inventory.emplace_back(inputItem, inputCount); // emplace_back 으로 객체 생성하여 삽입 push_back 수정 가능
+		inventory.emplace_back(inputItem, inputCount);
 		cout << "[" << inputItem->getName() << "] (이)가 " << inputCount << "개 새롭게 추가되었습니다." << endl;
 		cout << "[" << inputItem->getName() << "] x" << inputCount << endl;
 		return;
@@ -59,10 +60,9 @@ void Character::addItem(shared_ptr<Item> inputItem, int inputCount) { // 임시 It
 	inventory.emplace_back(inputItem, inputCount);
 	cout << "[" << inputItem->getName() << "] (이)가 " << inputCount << "개 새롭게 추가되었습니다." << endl;
 	cout << "[" << inputItem->getName() << "] x" << inputCount << endl;
-	// 중복되는 아이템 없을 경우 추가
 } // 아이템 추가
 
-void Character::removeItem(shared_ptr<Item> inputItem) {
+void Character::removeItem(shared_ptr<Item> inputItem) { // 임시 Item 클래스명 변경시 수정 필요
 	if (inventory.empty()) {
 		cout << "인벤토리가 비어있습니다." << endl;
 		return;
@@ -78,22 +78,18 @@ void Character::removeItem(shared_ptr<Item> inputItem) {
 			}
 			return;
 		}
-	}// 중복 아이템 체크후 있을 경우 count 감소
+	} // 중복 아이템 체크후 있을 경우 count 감소
 	cout << "해당 아이템이 인벤토리에 없습니다." << endl; // 예외 처리
 } // 아이템 제거
 
-//bool Character::isDead() const {
-//	return health <= 0;
-//} // 캐릭터 생사여부 판단 함수 필요시 부활조건 등을 추가해서 확장 가능
-
-shared_ptr<Item> Character::findItem(const string& inputName) const {
+shared_ptr<Item> Character::findItem(const string& inputName) const { // 임시 Item 클래스명 변경시 수정 필요
 	for (const auto& invItem : inventory) {
 		if (invItem.item->getName() == inputName) return invItem.item;
-	} // 인자로 받은 이름과 동일한 아이템이 있는지 찾은후 찾았다면 해당 아이템 포인터를 넘겨줌
-	return nullptr; // 없다면 nullptr
-}
+	}
+	return nullptr; // 예외 처리
+} // 아이템 찾기
 
-void Character::showInventory() {
+void Character::showInventory() { // 임시 Item 클래스명 변경시 수정 필요
 	if (inventory.empty()) {
 		cout << "인벤토리가 비어있습니다." << endl;
 		return;
@@ -103,12 +99,16 @@ void Character::showInventory() {
 		cout << "[" << invItem.item->getName() << "] x" << invItem.count << endl;
 	}
 	cout << "===================" << endl;
-}
+} // 인벤토리 확인
 
 void Character::addExp(int inputExp) {
 	exp = inputExp;
 	if (exp >= 100) levelUp();
-}
+} // 경험치 추가
+
+//bool Character::isDead() const {
+//	return health <= 0;
+//} // 캐릭터 생사여부 판단 함수 필요시 부활조건 등을 추가해서 확장 가능
 
 // getter
 const string& Character::getName() const {
@@ -147,10 +147,6 @@ void Character::setHealth(int inputHealth) {
 void Character::setAttack(int inputAttack) {
 	attack = inputAttack;
 }
-
-//void Character::setExperience(int inputExperience) {
-//	experience = inputExperience; // 이름은 addExp로 수정 exp 100 이상이면 levelUp()호출
-//}
 
 void Character::setGold(int inputGold) {
 	gold = inputGold;
