@@ -3,7 +3,6 @@
 #include <vector>
 #include <memory>
 #include "healthPotion.h" // 임시 헤더 파일
-#include "shop.h" // 임시 헤더 파일
 
 using namespace std;
 
@@ -36,7 +35,7 @@ public:
 	void addItem(shared_ptr<Item> inputItem, int inputCount); // 아이템 추가 함수, 인자로 카운트 추가
 	void removeItem(shared_ptr<Item> inputItem); // 아이템 제거 함수
 	//bool isDead() const; // 캐릭터 생사여부 판단 함수
-	shared_ptr<Item> findItem(const string& inputName); // 아이템 객체 검색후 반환하는 함수 없으면 nullptr
+	shared_ptr<Item> findItem(const string& inputName) const; // 아이템 객체 검색후 반환하는 함수 없으면 nullptr
 	void showInventory(); // void 인벤토리 아이템 다 출력
 	void addExp(int inputExp); // sexExperience -> addExp로 변경 경험치값이 100을 초과하면 levelUp() 호출
 	// getter

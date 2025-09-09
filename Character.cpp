@@ -86,7 +86,7 @@ void Character::removeItem(shared_ptr<Item> inputItem) {
 //	return health <= 0;
 //} // 캐릭터 생사여부 판단 함수 필요시 부활조건 등을 추가해서 확장 가능
 
-shared_ptr<Item> Character::findItem(const string& inputName) {
+shared_ptr<Item> Character::findItem(const string& inputName) const {
 	for (const auto& invItem : inventory) {
 		if (invItem.item->getName() == inputName) return invItem.item;
 	} // 인자로 받은 이름과 동일한 아이템이 있는지 찾은후 찾았다면 해당 아이템 포인터를 넘겨줌
